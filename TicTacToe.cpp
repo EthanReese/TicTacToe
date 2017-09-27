@@ -18,25 +18,24 @@ using namespace std;
 bool checkWin(int player, int board[3][3]);
 bool checkTie(int board[3][3]);
 void printBoard(int board[3][3]);
+void clearBoard(int board[3][3]);
 
 int main(){
-	//Make counters that can count how many wins each player has
-	int xWins = 0;
-	int oWins = 0;
-	int tie = 0;
 	
 	//Make a variable that tracks if a user wants to keep playing
 	bool stillPlaying = true;
 
 	//Make a two dimensional int array that represents the game board
 	int board[3][3];
+    int oWinCounter = 0;
+    int xWinCounter = 0;
 
 	while(stillPlaying){
 		//Make the initial turn X
 		int turn  = X_TURN;
-        int xWinCounter = 0;
-        int oWinCounter = 0;
 		//Main game loop
+        clearBoard(board);
+
 		while(!checkWin(X_HELD, board) && !checkWin(O_HELD, board) && !checkTie(board)){
             printBoard(board);
             //Check the turn and ask the proper player for the turn
@@ -54,18 +53,18 @@ int main(){
                 cout << "Please enter a row a, b, c" << endl;
                 continue;
             }
-            else if(input[1] != '1' && input[1] != '2' && input[2] != '3'){
+            else if(input[1] != '1' && input[1] != '2' && input[1] != '3'){
                 cout << "Please enter a column 1, 2, or 3" << endl;
                 continue;
             }
             //Convert the input into usable numbers
             int row = input[0] - 'a';
-            int column = input[0] - '1';
+            int column = input[1] - '1';
             //Check if the square is available
             if(board[row][column] == BLANK){
                 //Then, check the turn and adjust the board appropriately
                 if(turn == X_TURN){
-                    board[row][column] == X_HELD;
+                    board[row][column] = X_HELD;
                     turn = O_TURN;
                 }
                 else{
@@ -80,16 +79,16 @@ int main(){
             }
         } //Restart the round while
         //If x wins then they should be congratulated
-        if(checkWin(X_HELD, board){
+        if(checkWin(X_HELD, board)){
             cout << "X Wins.";
             ++xWinCounter;
             //Print out a properly formatted number
             if(xWinCounter == 1){
-                cout << "This is X's 1st time winning"
+                cout << "This is X's 1st time winning";
                 }
             else if(xWinCounter == 2){
                 cout << "This is X's 2nd time winning";
-                }
+              }
             else if(xWinCounter == 3){
                 cout << "This is X's 3rd time winning";
                 }
@@ -98,7 +97,7 @@ int main(){
                 }
         }
         //Tell the user if O wins
-        if(checkWin(O_HELD, board){
+        if(checkWin(O_HELD, board)){
             cout << "O Wins. ";
             ++oWinCounter;
             //Print out a properly formatted number of wins
@@ -115,8 +114,21 @@ int main(){
                 cout << "This is O's " << oWinCounter << "th time winning" << endl;
                 }
         }
-        else{
+        if(checkTie){
             cout << "It was a tie." << endl;
+        }
+        //Check if the player would like to play again
+        cout << "Would you like to play again? (y/n)";
+        char input;
+        cin >> input;
+        //If the input is yes than it needs to clear the board and restart the loop
+        if(tolower(input) == 'y'){
+            clearBoard(board);
+            turn = X_TURN;
+        }
+        else{
+            stillPlaying = false;
+            return 0;
         }
 	}
 	return 0;
@@ -185,16 +197,28 @@ void printBoard(int board[3][3]){
             if(board[row][column] == BLANK){
                 cout << " \t";
             }   
-            if(board[row][column] == X_HELD){
+            else if(board[row][column] == X_HELD){
                 cout << "X\t";
             }
-            if(board[row][column] == O_HELD){
+            else if(board[row][column] == O_HELD){
                 cout << "O\t";
             }
-            //End the line
-            cout << endl;
+        }
+        cout << endl;
+    }
+}
+
+//Function to clear off the game board
+void clearBoard(int board[3][3]){
+   //Loop through all rows
+    for(int row = 0; row < 3; row++){
+        //Loop through all columns
+        for(int column = 0; column < 3; column++){
+            //Make the selected board square blank
+            board[row][column] = BLANK;
         }
     }
+    
 }
 
 
