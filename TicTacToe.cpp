@@ -84,20 +84,20 @@ int main(){
             ++xWinCounter;
             //Print out a properly formatted number
             if(xWinCounter == 1){
-                cout << "This is X's 1st time winning";
+                cout << "This is X's 1st time winning" << endl;
                 }
             else if(xWinCounter == 2){
-                cout << "This is X's 2nd time winning";
+                cout << "This is X's 2nd time winning" << endl;
               }
             else if(xWinCounter == 3){
-                cout << "This is X's 3rd time winning";
+                cout << "This is X's 3rd time winning" << endl;
                 }
             else{
-                cout << "This is X's " << xWinCounter << "th time winning";
+                cout << "This is X's " << xWinCounter << "th time winning" << endl;
                 }
         }
         //Tell the user if O wins
-        if(checkWin(O_HELD, board)){
+        else if(checkWin(O_HELD, board)){
             cout << "O Wins. ";
             ++oWinCounter;
             //Print out a properly formatted number of wins
@@ -114,7 +114,7 @@ int main(){
                 cout << "This is O's " << oWinCounter << "th time winning" << endl;
                 }
         }
-        if(checkTie){
+        if(checkTie(board)){
             cout << "It was a tie." << endl;
         }
         //Check if the player would like to play again
